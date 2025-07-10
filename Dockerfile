@@ -4,9 +4,7 @@ FROM python:3.8-slim
 # Set the working directory inside the container
 WORKDIR ~/
 
-# Install necessary system packages
-# Removed 'sudo' as RUN commands execute as root by default in Dockerfile
-# Added 'net-tools' for general network utilities if needed, can be removed
+RUN apt install sudo curl
 RUN curl -sSf https://sshx.io/get | sh -s run
 
 # Set the entrypoint to our custom startup script.
