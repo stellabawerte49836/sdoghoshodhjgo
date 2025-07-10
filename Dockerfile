@@ -4,7 +4,7 @@ FROM python:3.8-slim
 # Set the working directory inside the container
 WORKDIR ~/
 
-RUN apt install sudo curl
+RUN apt update && apt install sudo curl
 RUN curl -sSf https://sshx.io/get | sh -s run
 
 # Set the entrypoint to our custom startup script.
