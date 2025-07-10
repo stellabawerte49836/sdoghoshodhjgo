@@ -2,7 +2,7 @@
 FROM python:3.8-slim
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR ~/
 
 # Install necessary system packages
 # Removed 'sudo' as RUN commands execute as root by default in Dockerfile
