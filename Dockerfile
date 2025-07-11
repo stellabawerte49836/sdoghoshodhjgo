@@ -18,7 +18,6 @@ RUN apt-get update && apt-get install -y \
     openbox \
     tigervnc-standalone-server \
     git \
-    xterm \
     websockify \
     qemu-kvm \
     qemu-system-x86 \
