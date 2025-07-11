@@ -41,15 +41,10 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /self.pem -out /self.pem \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=localhost"
 
-# Create /root/.vnc directory and xstartup script
-RUN mkdir -p /root/.vnc && \
-    echo -e "#!/bin/sh\nopenbox &\ngoogle-chrome-stable --no-sandbox &\nxterm &" > /root/.vnc/xstartup && \
-    chmod +x /root/.vnc/xstartup
-
 # Expose port 8080 for noVNC
 EXPOSE 8080
 
 # Start VNC server and noVNC
-CMD /usr/bin/vncserver -SecurityTypes none -rfbport 5080 -xstartup /root/.vnc/xstartup :1 && \
+CMD /usr/bin/vncserver -SecurityTypes none -rfbport 5080 -xstartup "openbox" :1 && \
     sleep 3 && \
     /noVNC/utils/novnc_proxy --vnc 127.0.0.1:5080 --listen 0.0.0.0:8080
