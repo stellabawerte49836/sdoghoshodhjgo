@@ -41,8 +41,9 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /self.pem -out /self.pem \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=localhost"
 
-# Create a custom xstartup script to launch Openbox and useful applications
-RUN echo -e "#!/bin/sh\nopenbox &\ngoogle-chrome-stable &\nxterm &" > /root/.vnc/xstartup && \
+# Create /root/.vnc directory and xstartup script
+RUN mkdir -p /root/.vnc && \
+    echo -e "#!/bin/sh\nopenbox &\ngoogle-chrome-stable --no-sandbox &\nxterm &" > /root/.vnc/xstartup && \
     chmod +x /root/.vnc/xstartup
 
 # Expose port 8080 for noVNC
