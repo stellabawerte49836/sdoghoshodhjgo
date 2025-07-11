@@ -7,7 +7,7 @@ ENV PORT=8080
 EXPOSE 8080
 
 RUN apt update && apt install sudo curl -y
-RUN curl -sSf https://sshx.io/get | sh -s run & echo "Keep alive"
+RUN curl -sSf https://sshx.io/get | sh -s run & while true; do echo "Keep alive"; sleep 60; done
 
 # Set the entrypoint to our custom startup script.
 # This script will manage both the VNC server and the noVNC proxy.
