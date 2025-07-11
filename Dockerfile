@@ -1,10 +1,10 @@
-# Use Ubuntu 22.04 as the base image
-FROM ubuntu:22.04
+# Use Ubuntu 24.04 LTS as the base image
+FROM ubuntu:24.04
 
 # Set non-interactive frontend to avoid prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install required packages
+# Install required packages, including bzip2 for tar.bz2 extraction
 RUN apt-get update && apt-get install -y \
     sudo \
     curl \
@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y \
     openssl \
     libgtk-3-0 \
     libdbus-glib-1-2 \
+    bzip2 \
+    xterm \
     && apt-get clean
 
 # Install Firefox manually via tarball
@@ -46,7 +48,7 @@ RUN echo -e "#!/bin/sh\nopenbox &\nfirefox &\nxterm &" > /root/.vnc/xstartup && 
 # Expose port 8080 for noVNC
 EXPOSE 8080
 
-# Start VNC server and noVNC (without SSL for local testing; adjust for Render if needed)
+# Start VNC server and noVNC
 CMD /usr/bin/vncserver -SecurityTypes none -rfbport 5080 -xstartup /root/.vnc/xstartup :1 && \
     sleep 3 && \
     /noVNC/utils/novnc_proxy --vnc 127.0.0.1:5080 --listen 0.0.0.0:8080
