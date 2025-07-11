@@ -1,14 +1,36 @@
-# Use a Debian-based Python image
-FROM python:3.8-slim
+# Use Ubuntu 22.04 as the base image
+FROM ubuntu:22.04
 
-# Set the working directory inside the container
-WORKDIR /root
-ENV PORT=8080
+# Set non-interactive frontend to avoid prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    build-essential \
+    cmake \
+    make \
+    firefox \
+    kitty \
+    fluxbox \
+    openbox \
+    tigervnc-standalone-server \
+    git \
+    xterm \
+    websockify \
+    qemu-kvm \
+    qemu-system-x86 \
+    tint2 \
+    && apt-get clean
+
+# Clone noVNC from GitHub
+RUN git clone https://github.com/novnc/noVNC.git /noVNC
+
+# Expose port 8080 for noVNC
 EXPOSE 8080
 
-RUN apt update && apt install sudo curl -y
-RUN curl -sSf https://sshx.io/get | sh -s run & while true; do echo "Keep alive"; sleep 60; done
-
-# Set the entrypoint to our custom startup script.
-# This script will manage both the VNC server and the noVNC proxy.
-CMD ["/usr/local/bin/start.sh"]
+# Start VNC server and noVNC
+CMD /usr/bin/vncserver -SecurityTypes none -rfbport 5080 -xstartup /usr/bin/openbox :1 && \
+    sleep 3 && \
+    /noVNC/utils/novnc_proxy --vnc 127.0.0.1:5080 --listen 0.0.0.0:8080
