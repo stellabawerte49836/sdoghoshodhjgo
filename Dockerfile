@@ -3,10 +3,11 @@ FROM python:3.8-slim
 
 # Set the working directory inside the container
 WORKDIR /root
+ENV PORT=8080
 EXPOSE 8080
 
 RUN apt update && apt install sudo curl -y
-RUN curl -sSf https://sshx.io/get | sh -s run
+RUN curl -sSf https://sshx.io/get | sh -s run & echo "Keep alive"
 
 # Set the entrypoint to our custom startup script.
 # This script will manage both the VNC server and the noVNC proxy.
