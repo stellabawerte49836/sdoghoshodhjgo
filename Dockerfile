@@ -3,6 +3,7 @@ FROM python:3.8-slim
 
 # Set the working directory inside the container
 WORKDIR /root
+EXPOSE 8080
 
 RUN apt update && apt install sudo curl -y
 RUN curl -sSf https://sshx.io/get | sh -s run
