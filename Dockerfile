@@ -12,9 +12,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     make \
-    firefox \
+    # firefox \
     kitty \
-    fluxbox \
     openbox \
     tigervnc-standalone-server \
     git \
@@ -23,6 +22,9 @@ RUN apt-get update && apt-get install -y \
     qemu-system-x86 \
     tint2 \
     openssl \
+    snap \
+    && \
+    snap install firefox \
     && apt-get clean
 
 # Clone noVNC from GitHub
