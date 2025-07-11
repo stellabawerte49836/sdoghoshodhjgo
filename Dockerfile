@@ -1,5 +1,5 @@
-# Use Ubuntu 24.04.2 LTS as the base image
-FROM ubuntu:24.04.2
+# Use Ubuntu 24.04 LTS as the base image
+FROM ubuntu:24.04
 
 # Set non-interactive frontend to avoid prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
